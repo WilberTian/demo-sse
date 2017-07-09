@@ -5,9 +5,12 @@
         <title>SSE Demo</title>
     </head>
     <body>
+        <button id="close-btn">Close</button>
         <pre id="x">Initializing...</pre>
         <script>
             var contentDomEl = document.getElementById("x");
+            var closeBtn = document.getElementById("close-btn");
+
             var es = new EventSource("stream");
 
             es.onopen = function(e) {
@@ -24,6 +27,10 @@
 
             es.addEventListener('counter', function(e) {
                 contentDomEl.innerHTML += "\n" + e.data;
+            }, false);
+
+            closeBtn.addEventListener('click', function(e) {
+                es.close();
             }, false);
         </script>
     </body>
