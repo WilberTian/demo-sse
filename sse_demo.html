@@ -7,9 +7,23 @@
     <body>
         <pre id="x">Initializing...</pre>
         <script>
+            var contentDomEl = document.getElementById("x");
             var es = new EventSource("stream");
-            es.addEventListener("message", function(e){
-                document.getElementById("x").innerHTML += "\n" + e.data;
+
+            es.onopen = function(e) {
+                contentDomEl.innerHTML += "\nSSE connection estiblished!";
+            };
+
+            es.onmessage  = function(e){
+                contentDomEl.innerHTML += "\n" + e.data;
+            };
+
+            es.onerror = function(e) {
+                contentDomEl.innerHTML += "\nError occured!";
+            };
+
+            es.addEventListener('counter', function(e) {
+                contentDomEl.innerHTML += "\n" + e.data;
             }, false);
         </script>
     </body>
